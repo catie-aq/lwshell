@@ -98,6 +98,16 @@ extern "C" {
 #endif
 
 /**
+ * \brief           Enables `1` or disables `0` print echo
+ *                  need LWSHELL_CFG_USE_OUTPUT to be enable
+ *
+ * This is useful to give library feedback to user
+ */
+#ifndef LWSHELL_CFG_USE_ECHO
+#define LWSHELL_CFG_USE_ECHO 1
+#endif
+
+/**
  * \brief           Enables `1` or disables `0` generic ˙listcmd` command to list of registered commands
  *
  * \ref LWSHELL_CFG_USE_OUTPUT must be enabled to use this feature

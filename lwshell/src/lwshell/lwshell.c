@@ -268,13 +268,17 @@ lwshell_input(const void* in_data, size_t len) {
     for (size_t i = 0; i < len; ++i) {
         switch (d[i]) {
             case LWSHELL_ASCII_CR: {
+#if LWSHELL_CFG_USE_ECHO
                 LW_OUTPUT(lw, "\r");
+#endif
                 prv_parse_input(lw);
                 LWSHELL_RESET_BUFF(lw);
                 break;
             }
             case LWSHELL_ASCII_LF: {
+#if LWSHELL_CFG_USE_ECHO
                 LW_OUTPUT(lw, "\n");
+#endif
                 prv_parse_input(lw);
                 LWSHELL_RESET_BUFF(lw);
                 break;
@@ -284,13 +288,17 @@ lwshell_input(const void* in_data, size_t len) {
                 if (lw->buff_ptr > 0) {
                     --lw->buff_ptr;
                     lw->buff[lw->buff_ptr] = '\0';
+#if LWSHELL_CFG_USE_ECHO
                     LW_OUTPUT(lw, "\b \b");
+#endif
                 }
                 break;
             }
             default: {
+#if LWSHELL_CFG_USE_ECHO
                 char str[2] = {d[i]};
                 LW_OUTPUT(lw, str);
+#endif
                 if (d[i] >= 0x20 && d[i] < 0x7F) {
                     LWSHELL_ADD_CH(lw, d[i]);
                 }
