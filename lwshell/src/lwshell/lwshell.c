@@ -58,6 +58,12 @@
 #define LW_OUTPUT(lw, str)
 #endif
 
+#if LWSHELL_CFG_USE_ECHO
+#define LW_OUTPUT_ECHO(lw, str)     LW_OUTPUT(lw, str)
+#else
+#define LW_OUTPUT_ECHO(lw, str)
+#endif
+
 /* Array of all commands */
 static lwshell_cmd_t cmds[LWSHELL_CFG_MAX_CMDS];
 static size_t cmds_cnt;
@@ -268,17 +274,13 @@ lwshell_input(const void* in_data, size_t len) {
     for (size_t i = 0; i < len; ++i) {
         switch (d[i]) {
             case LWSHELL_ASCII_CR: {
-#if LWSHELL_CFG_USE_ECHO
-                LW_OUTPUT(lw, "\r");
-#endif
+                LW_OUTPUT_ECHO(lw, "\r");
                 prv_parse_input(lw);
                 LWSHELL_RESET_BUFF(lw);
                 break;
             }
             case LWSHELL_ASCII_LF: {
-#if LWSHELL_CFG_USE_ECHO
-                LW_OUTPUT(lw, "\n");
-#endif
+                LW_OUTPUT_ECHO(lw, "\n");
                 prv_parse_input(lw);
                 LWSHELL_RESET_BUFF(lw);
                 break;
@@ -288,17 +290,13 @@ lwshell_input(const void* in_data, size_t len) {
                 if (lw->buff_ptr > 0) {
                     --lw->buff_ptr;
                     lw->buff[lw->buff_ptr] = '\0';
-#if LWSHELL_CFG_USE_ECHO
-                    LW_OUTPUT(lw, "\b \b");
-#endif
+                    LW_OUTPUT_ECHO(lw, "\b \b");
                 }
                 break;
             }
             default: {
-#if LWSHELL_CFG_USE_ECHO
                 char str[2] = {d[i]};
-                LW_OUTPUT(lw, str);
-#endif
+                LW_OUTPUT_ECHO(lw, str);
                 if (d[i] >= 0x20 && d[i] < 0x7F) {
                     LWSHELL_ADD_CH(lw, d[i]);
                 }

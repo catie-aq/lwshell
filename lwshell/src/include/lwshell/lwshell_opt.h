@@ -98,10 +98,9 @@ extern "C" {
 #endif
 
 /**
- * \brief           Enables `1` or disables `0` print echo
- *                  need LWSHELL_CFG_USE_OUTPUT to be enable
+ * \brief           Enables `1` or disables `0` print output echo
  *
- * This is useful to give library feedback to user
+ * This is useful to give library echo feedback to user when typing
  */
 #ifndef LWSHELL_CFG_USE_ECHO
 #define LWSHELL_CFG_USE_ECHO 1
